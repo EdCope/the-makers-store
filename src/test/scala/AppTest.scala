@@ -7,7 +7,7 @@ class AppTest extends AnyWordSpec with Matchers with MockFactory {
   "An App" should {
     "start up" which {
       "says 'OK'" in {
-        val subject = App
+        val subject = main.App
         subject.start() shouldBe "OK"
       }
     }

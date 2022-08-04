@@ -8,7 +8,7 @@ We want to stick to the premises that the core functionalities of our app should
 
 You can assume that all User I/O with this "API" will be done so through the command line rather than HTTP. As for the database I/O, we'll connect to a mysterious local database that should be explained in the boiler plate code provided.
 
-## Excercise
+## Exercise
 
 The Makers Store is currently only available in certain cities globally. We track the locations available as `Location`s, stored in the locations table. The Makers Store carries a variety of `Item`s, which have a variety of prices, quantities, and most importantly what regions the product is available in.
 
