@@ -1,6 +1,8 @@
 package controller
 
+import main.db.DbAdapter
 import main.model.Item
+
 import scala.collection.mutable.ArrayBuffer
 
 class ItemController( ) {
@@ -16,9 +18,8 @@ class ItemController( ) {
 //      "quantity": 8,
 //      "availableLocales": ["EU", "UK"]
 //    }
-    println(next_id)
     val item = new Item(next_id, name, price, quantity, availableLocales)
-    main.db.DbAdapter.createItem(item)
+    DbAdapter.createItem(item)
   }
 
   private def next_id:Int = fetchAll().last.id + 1

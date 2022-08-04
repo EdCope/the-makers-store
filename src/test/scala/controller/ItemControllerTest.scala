@@ -1,5 +1,7 @@
 package controller
 
+import main.db.DbAdapterBase
+import main.model.Item
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalamock.scalatest.MockFactory
@@ -16,15 +18,12 @@ class ItemControllerTest extends AnyWordSpec with Matchers with MockFactory {
       }
     }
     "has a create method" which {
-      "adds an item to the end" in {
-        val obj = subject.fetchAll()
-        val id = obj.last.id + 1
-        subject.create("Egg", 0.5, 4, List("EU"))
-        obj.last.id shouldBe id
-        obj.last.name shouldBe "Egg"
-        obj.last.price shouldBe 0.5
-        obj.last.quantity shouldBe 4
-        obj.last.availableLocales shouldEqual List("EU")
+      "adds an item to the database" in {
+        val mockDB = mock[DbAdapterBase]
+        val mockItem = mock[Item]
+        subject.create("test", 0.5, 4, List("EU"))
+        (mockDB.createItem _).expects(mockItem).anyNumberOfTimes()
+        //still writes to json(?)
       }
     }
   }
