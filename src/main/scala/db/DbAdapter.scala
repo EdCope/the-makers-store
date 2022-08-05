@@ -174,5 +174,7 @@ object DbAdapter extends DbAdapterBase{
 
     os.remove(os.pwd / "src" / "main" / "resources" / "items.json")
     os.write(os.pwd / "src" / "main" / "resources" / "items.json", db)
+
+    ""
   }
 }
