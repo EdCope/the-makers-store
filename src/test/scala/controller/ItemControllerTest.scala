@@ -43,5 +43,31 @@ class ItemControllerTest extends AnyWordSpec with Matchers with MockFactory {
         subject.getItemById(5) shouldEqual(item)
       }
     }
+    "updateItemById" which {
+      "changes following database fields" which {
+        val mockDB = mock[DbAdapterBase]
+        val mockItemFactory = mock[ItemFactoryBase]
+        val subject = new ItemController(mockDB, mockItemFactory)
+        val item = new Item(1, "Egg", 0.2, 6, List("UK"))
+        val mockFetchAll = ArrayBuffer(item)
+        (mockDB.getItems _).expects().returns(mockFetchAll)
+
+        val updatedItem = new Item(1, "Boiled Egg", 0.5, 3, List("US"))
+        (mockItemFactory.create _).expects(1, "Boiled Egg", 0.5, 3, List("US")).returning(updatedItem)
+        (mockDB.updateItem _).expects(1, updatedItem).returns()
+
+        val result = subject.updateItemById(1)(
+          name = Option("Boiled Egg"),
+          price = Option(0.5),
+          quantity = Option(3),
+          availableLocales = Option(List("US"))
+        )
+        "name" in {result.name shouldEqual("Boiled Egg")}
+        "price" in {result.price shouldEqual(0.5)}
+        "quantity" in {result.quantity shouldEqual(3)}
+        "availableLocales" in {result.availableLocales shouldEqual(List("US"))}
+
+      }
+    }
   }
 }
