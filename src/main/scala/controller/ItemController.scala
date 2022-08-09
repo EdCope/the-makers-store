@@ -4,8 +4,7 @@ import Factory.{ItemFactory, ItemFactoryBase}
 import main.db.{DbAdapter, DbAdapterBase}
 import main.model.Item
 
-import scala.Double.NaN
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
+import scala.collection.mutable.ArrayBuffer
 
 class ItemController(val db: DbAdapterBase = DbAdapter, val itemFactory: ItemFactoryBase = ItemFactory) {
 
@@ -27,7 +26,6 @@ class ItemController(val db: DbAdapterBase = DbAdapter, val itemFactory: ItemFac
     val nAvailableLocales = availableLocales.getOrElse(prevItem.availableLocales)
 
     val newItem = itemFactory.create(id, nName, nPrice, nQuantity, nAvailableLocales)
-
     db.updateItem(id, newItem)
     newItem
   }
