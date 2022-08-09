@@ -32,10 +32,9 @@ class ItemController(val db: DbAdapterBase = DbAdapter, val itemFactory: ItemFac
     newItem
   }
 
-  def create(name: String, price: Double, quantity: Integer, availableLocales: List[String]): Item = {
+  def create(name: String, price: Double, quantity: Integer, availableLocales: List[String]): Unit = {
     val item = itemFactory.create(next_Id, name, price, quantity, availableLocales)
     db.createItem(item)
-    item
   }
 
   private def next_Id:Int = {

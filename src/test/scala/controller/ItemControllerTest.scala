@@ -29,7 +29,7 @@ class ItemControllerTest extends AnyWordSpec with Matchers with MockFactory {
         (mockDB.getItems _).expects().returns(ArrayBuffer())
         (mockItemFactory.create _).expects(0, "Egg", 0.2, 6, List("UK")).returning(item)
         (mockDB.createItem _).expects(item).returns()
-        subject.create("Egg", 0.2, 6, List("UK")) shouldEqual item
+        subject.create("Egg", 0.2, 6, List("UK"))
 
       }
     }
