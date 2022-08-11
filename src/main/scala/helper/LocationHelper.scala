@@ -20,7 +20,11 @@ object LocationHelper {
     }}
   }
 
-  def getContinentFromLocation(location: Location, locations: LinkedHashMap[String, LinkedHashMap[String, Seq[Location]]]): Unit = {
-
+  def getContinentFromLocation(location: String, locations: LinkedHashMap[String, LinkedHashMap[String, Seq[Location]]]): String = {
+    val flattened = LocationHelper.flattenLocations(locations)
+    flattened.find(_.name == location) match {
+      case Some(foundLocation) => foundLocation.continent
+      case None => throw new Exception("That city doesn't exist")
+    }
   }
 }
