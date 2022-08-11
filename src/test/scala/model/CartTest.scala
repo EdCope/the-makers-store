@@ -1,5 +1,7 @@
 package model
+import controller.ItemController
 import factory.UUIDFactoryBase
+import main.db.DbAdapterBase
 import main.model.{Item, Location}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
@@ -10,11 +12,13 @@ import scala.collection.mutable.ArrayBuffer
 class CartTest extends AnyWordSpec with Matchers with MockFactory {
   "Cart Model" should {
     val cartLocation = new Location(10, "Test Town")
+    val mockDb = mock[DbAdapterBase]
+    val mockUUIDFactory = mock[UUIDFactoryBase]
+    val mockItemController = mock[ItemController]
     "CartAttributes are" which {
       "have a uuid" in  {
-        val mockUUIDFactory = mock[UUIDFactoryBase]
         (mockUUIDFactory.create _).expects().returning("123e4567-e89b-12d3-a456-426655440000")
-        val cart = new Cart(cartLocation, mockUUIDFactory)
+        val cart = new Cart(cartLocation, mockItemController, mockDb, mockUUIDFactory)
         cart.uuid shouldEqual "123e4567-e89b-12d3-a456-426655440000"
       }
       "has a collection of items" in {
@@ -26,13 +30,22 @@ class CartTest extends AnyWordSpec with Matchers with MockFactory {
         cart.location shouldBe cartLocation
       }
     }
-
-    "can add an Item" in {
-      val cart = new Cart(cartLocation)
+    "add Item" which {
       val sampleItem = new Item(5, "Egg", 0.2, 6, List("EU"))
-      cart.addItem(sampleItem)
-      cart.contents shouldEqual ArrayBuffer(sampleItem)
+      "can add an Item" in {
+        (mockItemController.getItemsByLocation _).expects(cartLocation.name).returning(Array(sampleItem))
+        val cart = new Cart(cartLocation, mockItemController)
+        cart.addItem(sampleItem)
+        cart.contents shouldEqual ArrayBuffer(sampleItem)
+      }
+      "cannot add if not at location" in {
+        (mockItemController.getItemsByLocation _).expects(cartLocation.name).returning(Array())
+        val cart = new Cart(cartLocation, mockItemController)
+        val error = the[Exception] thrownBy {cart.addItem(sampleItem)}
+        error.getMessage shouldEqual("Item not at location")
+      }
     }
+
 
   }
 }
