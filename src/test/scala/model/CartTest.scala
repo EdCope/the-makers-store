@@ -19,5 +19,11 @@ class CartTest extends AnyWordSpec with Matchers with MockFactory {
       val cart = new Cart()
       cart.contents shouldBe a [ArrayBuffer[_]]
     }
+    "can add an Item" in {
+      val cart = new Cart()
+      val sampleItem = new Item(5, "Egg", 0.2, 6, List("EU"))
+      cart.addItem(sampleItem)
+      cart.contents shouldEqual ArrayBuffer(sampleItem)
+    }
   }
 }

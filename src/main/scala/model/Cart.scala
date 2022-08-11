@@ -6,4 +6,8 @@ import scala.collection.mutable.ArrayBuffer
 class Cart (val uuidFactory: factory.UUIDFactoryBase = factory.UUIDFactory,
             val contents: ArrayBuffer[Item] = ArrayBuffer()) {
   val uuid = uuidFactory.create()
+
+  def addItem(item: Item): Unit = {
+    contents.append(item)
+  }
 }
