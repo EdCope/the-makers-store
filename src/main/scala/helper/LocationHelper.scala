@@ -11,13 +11,21 @@ object LocationHelper {
   def flattenLocations(locations: LinkedHashMap[String, LinkedHashMap[String, Seq[Location]]]): List[FlatLocation] = {
     locations.foldLeft(List[FlatLocation]()) { (outputList, hMapOfRegion) => {
         val (continent,regionMap) = hMapOfRegion
-        outputList ++ regionMap.foldLeft(List[FlatLocation]()){(sublist, hMapOfLocation) => {
-            val (region, locationSeq) = hMapOfLocation
-            sublist ++ locationSeq.map(l => {
-              FlatLocation(l.id, l.name, continent, region)
-            }).toList
-        }}
+        outputList ++ findLocationsInRegionMap(regionMap, continent)
     }}
+  }
+
+  private def findLocationsInRegionMap(regionMap: LinkedHashMap[String, Seq[Location]], continent: String): List[FlatLocation] = {
+    regionMap.foldLeft(List[FlatLocation]()){(outputList, hMapOfLocation) => {
+      val (region, locationSeq) = hMapOfLocation
+      outputList ++ convertLocationsToFlatLocations(locationSeq, continent, region)
+    }}
+  }
+
+  private def convertLocationsToFlatLocations(locations: Seq[Location], continent: String, region: String): List[FlatLocation] ={
+    locations.map(location => {
+      FlatLocation(location.id, location.name, continent, region)
+    }).toList
   }
 
   def getContinentFromLocation(location: String, locations: LinkedHashMap[String, LinkedHashMap[String, Seq[Location]]]): String = {
