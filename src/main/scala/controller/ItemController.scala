@@ -12,6 +12,10 @@ class ItemController(val db: DbAdapterBase = DbAdapter, val itemFactory: ItemFac
     db.getItems()
   }
 
+//  def fetchByLocationId(id: Int): ArrayBuffer[Item] = {
+//
+//  }
+
   def getItemById(id: Int): Item = {
     val items = db.getItems()
     items.filter(_.id == id)(0)

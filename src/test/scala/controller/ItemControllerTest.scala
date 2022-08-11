@@ -77,7 +77,6 @@ class ItemControllerTest extends AnyWordSpec with Matchers with MockFactory {
         "price" in {result.price shouldEqual 0.5}
         "quantity" in {result.quantity shouldEqual 3}
         "availableLocales" in {result.availableLocales shouldEqual List("US")}
-
       }
     }
   }
