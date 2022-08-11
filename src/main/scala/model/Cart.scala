@@ -1,5 +1,5 @@
 package model
 
-class Cart (val uuidFactory: Factory.UUIDFactoryBase = Factory.UUIDFactory) {
+class Cart (val uuidFactory: factory.UUIDFactoryBase = factory.UUIDFactory) {
   val uuid = uuidFactory.create()
 }

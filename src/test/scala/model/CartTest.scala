@@ -1,5 +1,5 @@
 package model
-import Factory.UUIDFactoryBase
+import factory.UUIDFactoryBase
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalamock.scalatest.MockFactory

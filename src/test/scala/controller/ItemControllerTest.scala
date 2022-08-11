@@ -1,6 +1,6 @@
 package controller
 
-import Factory.ItemFactoryBase
+import factory.ItemFactoryBase
 import main.db.{DbAdapter, DbAdapterBase}
 import main.model.{Item, Location}
 import org.scalatest.matchers.should.Matchers

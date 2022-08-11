@@ -1,6 +1,6 @@
 package controller
 
-import Factory.{ItemFactory, ItemFactoryBase}
+import factory.{ItemFactory, ItemFactoryBase}
 import main.db.{DbAdapter, DbAdapterBase}
 import main.model.Item
 

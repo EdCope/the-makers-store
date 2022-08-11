@@ -1,4 +1,6 @@
-package Factory
+package factory
+
+import java.util.UUID
 
 trait UUIDFactoryBase {
   def create(): String
@@ -6,6 +8,6 @@ trait UUIDFactoryBase {
 
 object UUIDFactory extends UUIDFactoryBase {
   def create(): String ={
-    ""
+    UUID.randomUUID.toString
   }
 }
