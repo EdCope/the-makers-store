@@ -17,6 +17,13 @@ class ItemController(val db: DbAdapterBase = DbAdapter, val itemFactory: ItemFac
     items.filter(_.id == id)(0)
   }
 
+  def getItemsByLocation(location: String): Array[Item] = {
+    val items = db.getItems()
+    val locations = db.getLocations()
+    val continent = helper.LocationHelper.getContinentFromLocation(location, locations)
+    items.filter(_.availableLocales.contains(continent)).toArray
+  }
+
   def updateItemById(id: Int)(name: Option[String] = None, price: Option[Double] = None, quantity: Option[Int] = None, availableLocales: Option[List[String]] = None): Item = {
     val prevItem = getItemById(id)
 
