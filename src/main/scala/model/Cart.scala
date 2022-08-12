@@ -25,4 +25,8 @@ class Cart (val location: Location,
   def clearCart(): Unit = {
     contents.clear()
   }
+
+  def removeItemFromCartById(id: Int): Unit = {
+    contents --= contents.filter(_.id == id)
+  }
 }

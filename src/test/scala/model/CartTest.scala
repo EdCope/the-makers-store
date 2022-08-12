@@ -54,10 +54,15 @@ class CartTest extends AnyWordSpec with Matchers with MockFactory {
     "Clear Cart contents" which {
       val sampleItem = new Item(5, "Egg", 0.2, 6, List("EU"))
       val sampleItem2 = new Item(3, "Ham", 0.5, 8, List("EU"))
-      val cart = new Cart(cartLocation, contents = ArrayBuffer(sampleItem, sampleItem2))
       "fully clear" in {
+        val cart = new Cart(cartLocation, contents = ArrayBuffer(sampleItem, sampleItem2))
         cart.clearCart()
         cart.contents.length shouldEqual 0
+      }
+      "clear by id" in {
+        val cart = new Cart(cartLocation, contents = ArrayBuffer(sampleItem, sampleItem2))
+        cart.removeItemFromCartById(5)
+        cart.contents shouldEqual ArrayBuffer(sampleItem2)
       }
     }
 
