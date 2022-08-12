@@ -21,4 +21,8 @@ class Cart (val location: Location,
     else if (requestedItem(0).quantity < amountToAdd) throw new Exception("Not enough in stock")
     else contents.append(requestedItem(0))
   }
+
+  def clearCart(): Unit = {
+    contents.clear()
+  }
 }
