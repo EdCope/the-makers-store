@@ -13,8 +13,12 @@ class Cart (val location: Location,
             val contents: ArrayBuffer[Item] = ArrayBuffer()) {
   val uuid = uuidFactory.create()
 
-  def addItem(item: Item): Unit = {
+  def addItem(itemName: String, amountToAdd: Int): Unit = {
     val stock = itemController.getItemsByLocation(location.name)
-    if(stock.isEmpty) throw new Exception("Item not at location") else contents.append(item)
+    val requestedItem = stock.filter(_.name == itemName)
+
+    if(stock.isEmpty) throw new Exception("Item not at location")
+    else if (requestedItem(0).quantity < amountToAdd) throw new Exception("Not enough in stock")
+    else contents.append(requestedItem(0))
   }
 }

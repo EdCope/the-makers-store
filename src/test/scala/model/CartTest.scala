@@ -35,14 +35,20 @@ class CartTest extends AnyWordSpec with Matchers with MockFactory {
       "can add an Item" in {
         (mockItemController.getItemsByLocation _).expects(cartLocation.name).returning(Array(sampleItem))
         val cart = new Cart(cartLocation, mockItemController)
-        cart.addItem(sampleItem)
+        cart.addItem("Egg", 1)
         cart.contents shouldEqual ArrayBuffer(sampleItem)
       }
       "cannot add if not at location" in {
         (mockItemController.getItemsByLocation _).expects(cartLocation.name).returning(Array())
         val cart = new Cart(cartLocation, mockItemController)
-        val error = the[Exception] thrownBy {cart.addItem(sampleItem)}
+        val error = the[Exception] thrownBy {cart.addItem("Ham", 1)}
         error.getMessage shouldEqual("Item not at location")
+      }
+      "there is not enough stock at the location" in {
+        (mockItemController.getItemsByLocation _).expects(cartLocation.name).returning(Array(sampleItem))
+        val cart = new Cart(cartLocation, mockItemController)
+        val error = the[Exception] thrownBy {cart.addItem("Egg", 7)}
+        error.getMessage shouldEqual("Not enough in stock")
       }
     }
 
