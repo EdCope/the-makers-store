@@ -6,6 +6,8 @@ import main.model.{Item, Location}
 
 import scala.collection.mutable.ArrayBuffer
 
+case class CartItem(id: Int, name: String, quantity: Int)
+
 class Cart (val location: Location,
             val itemController: ItemController = new ItemController,
             val db: DbAdapterBase = DbAdapter,
@@ -19,7 +21,11 @@ class Cart (val location: Location,
 
     if(stock.isEmpty) throw new Exception("Item not at location")
     else if (requestedItem(0).quantity < amountToAdd) throw new Exception("Not enough in stock")
-    else contents.append(requestedItem(0))
+    else {
+      val b = requestedItem(0)
+      println(b.name, b.quantity, b.price)
+      contents.append(requestedItem(0))
+    }
   }
 
   def clearCart(): Unit = {
